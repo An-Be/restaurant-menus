@@ -18,6 +18,11 @@ describe('Restaurant and Menu Models', () => {
       const restaurant1 = await Restaurant.create(seedRestaurant[0])
       expect(restaurant1.name).toBe(seedRestaurant[0].name)
   });
+  test('rating property works correctly', async () => {
+    // TODO - write test
+    const restaurant2 = await Restaurant.create(seedRestaurant[1])
+    expect(restaurant2.rating).toBe(seedRestaurant[1].rating)
+});
 
   test('can create a Menu', async () => {
       // TODO - write test
@@ -28,7 +33,7 @@ describe('Restaurant and Menu Models', () => {
   test('can find Restaurants', async () => {
       // TODO - write test
       const findRestaurants = await Restaurant.findAll();
-      expect(findRestaurants.length).toEqual(1)
+      expect(findRestaurants.length).toEqual(2)
   });
 
   test('can find Menus', async () => {
