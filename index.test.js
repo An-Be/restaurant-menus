@@ -1,6 +1,6 @@
 const { sequelize } = require('./db');
-const { Restaurant, Menu } = require('./index');
-const { seedRestaurant, seedMenu } = require('./seedData');
+const { Restaurant, Menu, Item } = require('./index');
+const { seedRestaurant, seedMenu, seedItem } = require('./seedData');
 
 describe('Restaurant and Menu Models', () => {
   /**
@@ -48,4 +48,26 @@ describe('Restaurant and Menu Models', () => {
       const deletedRestaurants = await restaurant2.destroy();
       expect(Restaurant.length).toEqual(0);
   });
+
+  test('created an Item', async () => {
+    const item = await Item.create(seedItem[2]); //create an item
+    expect(item.name).toBe(seedItem[2].name);
+  });
+
+  test('test to account for association between Items and Menus', async() => {
+    const menu = await Menu.create(seedMenu[2]); //create Menu
+    const masala = await Item.create(seedItem[0]); //create Item
+    const soup = await Item.create(seedItem[1]); //create Item
+
+    await menu.addItem(masala); //add item to menu
+    await menu.addItem(soup); //add item to menu 
+
+    const allItems = await menu.getItems(); //get all items in menu returns an array
+
+    expect(allItems.length).toBe(2); //we've added 2 items to the menu
+    expect(allItems[0] instanceof Item).toBeTruthy; //checks that the value at index 0 of the list - a item object, is in fact a item object
+
+    
+  });
+
 })

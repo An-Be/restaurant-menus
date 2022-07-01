@@ -1,4 +1,10 @@
 const { Restaurant } = require('./models/Restaurant');
 const { Menu } = require('./models/Menu');
+const { Item } = require('./models/Item');
 
-module.exports = { Restaurant, Menu };
+//associate the menu and items models
+
+Item.belongsTo(Menu);
+Menu.hasMany(Item);
+
+module.exports = { Restaurant, Menu, Item };
